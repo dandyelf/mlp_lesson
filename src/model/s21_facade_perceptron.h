@@ -5,7 +5,7 @@
 
 namespace s21 {
 class FacadePerceptron {
-  public:
+ public:
   FacadePerceptron() = default;
   FacadePerceptron(const FacadePerceptron&) = delete;
   FacadePerceptron(FacadePerceptron&&) = delete;
