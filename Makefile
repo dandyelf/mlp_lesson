@@ -1,8 +1,7 @@
 # Project based on Qt lib on Qt Creator
 # On Ubumtu some lib need to install
-# sudo apt install build-essential mesa-common-dev cmake clang qtcreator 
-# qt6-base-dev qml-qt6 qt6-wayland
-# Some commands must be used
+# sudo apt install build-essential mesa-common-dev cmake clang clang-format
+# qt6-base-dev qml-qt6 qt6-wayland qtcreator mailcap# Some commands must be used
 # sudo update-alternatives --install /usr/bin/qmake qmake /usr/bin/qmake6 100
 # sudo update-alternatives --config qmake
 # 
@@ -18,7 +17,7 @@ TESTS = tests.out
 OS = $(shell uname -s)
 GT_FLAGS = -DTESTS_OBJ_PATH='"$(shell pwd)/src/tests/obj"' -lgtest_main -lgtest -lm -lstdc++ -pthread -lm -g
 PRO_FILE = src/view/mlp_qt_view/mlp_qt_view.pro
-
+ARCHIVE = archive_$(TARGET)
 
 #  Project files and directories
 BUILD_DIR = build
@@ -52,11 +51,11 @@ dvi:
 	open dvi.html
 
 dist:
-	rm -rf Archive_3dviewer1.0/
-	mkdir -p Archive_3dviewer1.0/
-	mv ./3dviewer/$(APPLICATION) Archive_3dviewer1.0/src/
-	tar cvzf Archive_3dviewer1.0.tgz Archive_3dviewer1.0/
-	rm -rf Archive_3dviewer1.0/
+	rm -rf $(ARCHIVE)/
+	mkdir -p $(ARCHIVE)/
+	cp ./$(BUILD_DIR)/$(APPLICATION) $(ARCHIVE)/src/
+	tar cvzf $(ARCHIVE).tgz $(ARCHIVE)/
+	rm -rf $(ARCHIVE)/
 
 tests:
 	mkdir -p $(BUILD_DIR)
