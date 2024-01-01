@@ -1,22 +1,28 @@
-#ifndef MLPMAINWIN_H
-#define MLPMAINWIN_H
+#ifndef MLPMAINWIN_H_
+#define MLPMAINWIN_H_
+
+#include <../../controller/s21_controller_perceptron.h>
 
 #include <QMainWindow>
 
 QT_BEGIN_NAMESPACE
-namespace Ui { class MlpMainWin; }
+namespace Ui {
+class MlpMainWin;
+}
 QT_END_NAMESPACE
 
-class MlpMainWin : public QMainWindow
-{
-    Q_OBJECT
+class MlpMainWin : public QMainWindow {
+  Q_OBJECT
 
-public:
-    MlpMainWin(QWidget *parent = nullptr);
-    ~MlpMainWin();
-    void SetControllerObj(s21::Controller &controller_obj);
+ public:
+  MlpMainWin(QWidget *parent = nullptr);
+  ~MlpMainWin();
+  void SetControllerObj(s21::ControllerPerceptron *controller_obj) {
+    controller_obj_ = controller_obj;
+  }
 
-private:
-    Ui::MlpMainWin *ui;
+ private:
+  s21::ControllerPerceptron *controller_obj_;
+  Ui::MlpMainWin *ui_;
 };
-#endif // MLPMAINWIN_H
+#endif  // MLPMAINWIN_H_

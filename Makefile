@@ -19,25 +19,28 @@ OS = $(shell uname -s)
 GT_FLAGS = -DTESTS_OBJ_PATH='"$(shell pwd)/src/tests/obj"' -lgtest_main -lgtest -lm -lstdc++ -pthread -lm -g
 PRO_FILE = src/view/mlp_qt_view/mlp_qt_view.pro
 
+
 #  Project files and directories
 BUILD_DIR = build
-FOLDERS = src/controller/*.h src/model/*.h src/model/*.cc src/tests/*.cc src/ogl/*.h src/ogl/*.cc
+FOLDERS = src/controller/*.h src/model/*.h src/model/*.cc src/tests/*.cc src/view/mlp_qt_view/*.h src/view/mlp_qt_view/*.cc
 
 ifeq ($(OS), Darwin)
     LIBS := -lcheck
 	APPLICATION = $(TARGET).app
 	OPEN = open $(APPLICATION)
+	APP_NAME = -DNAME_OF_APP=$(APPLICATION)
 else
     LIBS := -lgtest -lstdc++ -lcheck_pic -lrt -lpthread -lsubTESTS -lm -g
 	APPLICATION = $(TARGET)
 	OPEN = ./$(APPLICATION)
+	APP_NAME = -DNAME_OF_APP=$(APPLICATION)
 endif
 
 all: install
 
 install:
 	mkdir -p $(BUILD_DIR)
-	cd $(BUILD_DIR) && qmake CONFIG+=qtquickcompiler ../$(PRO_FILE) && make
+	cd $(BUILD_DIR) && qmake TARGET=$(APPLICATION) CONFIG+=qtquickcompiler ../$(PRO_FILE) && make
 	make open
 
 uninstall: clean
