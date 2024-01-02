@@ -3,12 +3,12 @@
 
 #include <../../controller/s21_controller_perceptron.h>
 
-#include <QMainWindow>
-#include <QStyle>
-#include <QTimer>
 #include <QLabel>
+#include <QMainWindow>
 #include <QPushButton>
+#include <QStyle>
 #include <QTime>
+#include <QTimer>
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -40,14 +40,14 @@ class MlpMainWin : public QMainWindow {
 
   void on_button5_start_edu_clicked();
 
-private:
+ private:
   s21::ControllerPerceptron *controller_obj_{};
   Ui::MlpMainWin *ui_{};
   QTimer *m_timer_{};
-  QPushButton * button_blink_{};
+  QPushButton *button_blink_{};
   bool set_data_1_{}, load_data_2_{}, add_tests_3_{}, load_tests_4_{};
-//  QLabel *m_label;
-//  bool m_isChecked = false;
+  //  QLabel *m_label;
+  //  bool m_isChecked = false;
 
   //  !!!!!!!
   void BlinkingButton();
