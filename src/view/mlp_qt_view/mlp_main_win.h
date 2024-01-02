@@ -6,6 +6,9 @@
 #include <QMainWindow>
 #include <QStyle>
 #include <QTimer>
+#include <QLabel>
+#include <QPushButton>
+#include <QTime>
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -25,22 +28,29 @@ class MlpMainWin : public QMainWindow {
     controller_obj_ = controller_obj;
   }
  private slots:
-  void toggle();
+  void Toggle();
 
- private:
-  s21::ControllerPerceptron *controller_obj_;
-  Ui::MlpMainWin *ui_;
-  QTimer *m_timer;
-  bool m_isChecked = false;
+  void on_button1_set_data_clicked();
+
+  void on_button2_load_data_clicked();
+
+  void on_button3_add_tests_clicked();
+
+  void on_button4_load_tests_clicked();
+
+  void on_button5_start_edu_clicked();
+
+private:
+  s21::ControllerPerceptron *controller_obj_{};
+  Ui::MlpMainWin *ui_{};
+  QTimer *m_timer_{};
+  QPushButton * button_blink_{};
+  bool set_data_1_{}, load_data_2_{}, add_tests_3_{}, load_tests_4_{};
+//  QLabel *m_label;
+//  bool m_isChecked = false;
 
   //  !!!!!!!
-  void BlinkingButton() {
-    m_timer = new QTimer(this);
-    m_timer->setInterval(500);
-    connect(m_timer, &QTimer::timeout, this, &MlpMainWin::toggle);
-    m_timer->start();
-  }
-
-  void updateStyle();
+  void BlinkingButton();
+  void BlinkLogic();
 };
 #endif  // MLPMAINWIN_H_
