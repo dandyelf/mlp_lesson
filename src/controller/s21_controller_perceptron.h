@@ -13,8 +13,10 @@ class ControllerPerceptron {
   ControllerPerceptron& operator=(const ControllerPerceptron&) = delete;
   ControllerPerceptron& operator=(ControllerPerceptron&&) = delete;
   void SetModel(s21::FacadePerceptron* facade) { facade_ = facade; }
-  void OpenCsv(std::string file_name) { facade_->OpenCsv(file_name); }
-  const std::vector<std::vector<int>>* GetCsv() { return GetCsv(); }
+  void OpenCsv(std::string file_name, size_t image_resolution) {
+    facade_->OpenCsv(file_name, image_resolution);
+  }
+  const std::vector<std::vector<int>>* GetCsv() { return facade_->GetCsv(); }
 
  private:
   s21::FacadePerceptron* facade_;

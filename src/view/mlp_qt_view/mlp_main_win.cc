@@ -9,7 +9,10 @@ MlpMainWin::MlpMainWin(QWidget* parent)
   //  m_label = new QLabel(this);
 }
 
-MlpMainWin::~MlpMainWin() { delete ui_; }
+MlpMainWin::~MlpMainWin() {
+  delete ui_;
+  delete scene_;
+}
 
 void MlpMainWin::BlinkingButton() {
   m_timer_ = new QTimer(this);
@@ -41,8 +44,21 @@ void MlpMainWin::BlinkLogic() {
 }
 
 void MlpMainWin::on_button1_set_data_clicked() {
-  set_data_1_ = true;
-  BlinkLogic();
+  QString fileName2 = QFileDialog::getOpenFileName(
+      this, tr("Open Csv File"), data_path_1_, tr("CSV Files (*.csv)"));
+  if (fileName2 != "") {
+    data_path_1_ = fileName2;
+    try {
+      controller_obj_->OpenCsv(data_path_1_.toStdString(), 784);
+      set_data_1_ = true;
+      BlinkLogic();
+      Paint();
+    } catch (std::exception& e) {
+      error_message(e.what());
+    }
+  } else {
+    error_message("Нет файла");
+  }
 }
 
 void MlpMainWin::on_button2_load_data_clicked() {
@@ -66,4 +82,27 @@ void MlpMainWin::on_button5_start_edu_clicked() {
   add_tests_3_ = false;
   load_tests_4_ = false;
   BlinkLogic();
+}
+
+void MlpMainWin::Paint() {
+  // Создаем вектор пикселей
+      const std::vector<int> pixelVector = controller_obj_->GetCsv()->at(0);
+
+      scene_ = new QGraphicsScene(this);
+
+      ui_->graphicsView->setScene(scene_);
+      // Создаем QImage
+      QImage image((uchar*)pixelVector.data(), 28, 28, QImage::Format_Grayscale16);
+
+      // Создаем QGraphicsPixmapItem и устанавливаем изображение
+      QGraphicsPixmapItem* pixmapItem = new QGraphicsPixmapItem(QPixmap::fromImage(image));
+
+      // Добавляем QGraphicsPixmapItem на сцену
+      scene_->addItem(pixmapItem);
+}
+
+void MlpMainWin::error_message(QString message) {
+  QMessageBox messageBox;
+  messageBox.setFixedSize(500, 200);
+  messageBox.information(0, "Info", message);
 }

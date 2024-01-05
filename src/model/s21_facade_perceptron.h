@@ -15,8 +15,9 @@ class FacadePerceptron {
   FacadePerceptron& operator=(const FacadePerceptron&) = delete;
   FacadePerceptron& operator=(FacadePerceptron&&) = delete;
   bool IsAllGood() { return true; }
-
-  void OpenCsv(std::string file_name) { csv_vector_ = ParseCsv(file_name); }
+  void OpenCsv(std::string file_name, size_t image_resolution) {
+    csv_vector_ = ParseCsv(file_name, image_resolution);
+  }
   const std::vector<std::vector<int>>* GetCsv() {
     const std::vector<std::vector<int>>* tmp = &csv_vector_;
     return tmp;

@@ -3,12 +3,17 @@
 
 #include <../../controller/s21_controller_perceptron.h>
 
+#include <QFileDialog>
+#include <QGraphicsPixmapItem>
+#include <QImage>
 #include <QLabel>
 #include <QMainWindow>
+#include <QMessageBox>
 #include <QPushButton>
 #include <QStyle>
 #include <QTime>
 #include <QTimer>
+#include <exception>
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -41,16 +46,21 @@ class MlpMainWin : public QMainWindow {
   void on_button5_start_edu_clicked();
 
  private:
+  QGraphicsScene *scene_;
   s21::ControllerPerceptron *controller_obj_{};
   Ui::MlpMainWin *ui_{};
   QTimer *m_timer_{};
   QPushButton *button_blink_{};
+  QString data_path_1_{};
+  QString fileName;
   bool set_data_1_{}, load_data_2_{}, add_tests_3_{}, load_tests_4_{};
   //  QLabel *m_label;
   //  bool m_isChecked = false;
 
   //  !!!!!!!
+  void Paint();
   void BlinkingButton();
   void BlinkLogic();
+  void error_message(QString message);
 };
 #endif  // MLPMAINWIN_H_
