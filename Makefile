@@ -15,7 +15,7 @@ GCOV = --coverage
 TARGET = S21_MLP
 TESTS = tests.out
 OS = $(shell uname -s)
-GT_FLAGS = -DTESTS_OBJ_PATH='"$(shell pwd)/src/tests/obj"' -lgtest_main -lgtest -lm -lstdc++ -pthread -lm -g
+GT_FLAGS = -DTESTS_OBJ_PATH='"$(shell pwd)/datasets/emnist-letters/"' -lgtest_main -lgtest -lm -lstdc++ -pthread -lm -g
 PRO_FILE = src/view/mlp_qt_view/mlp_qt_view.pro
 ARCHIVE = archive_$(TARGET)
 

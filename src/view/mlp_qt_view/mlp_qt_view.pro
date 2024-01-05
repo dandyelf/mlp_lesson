@@ -11,9 +11,15 @@ qmake
 
 SOURCES += \
     ../../main.cc \
+    ../../model/s21_facade_perceptron.cc \
+    ../../model/s21_model_perceptron.cc \
     mlp_main_win.cc
 
 HEADERS += \
+    ../../controller/s21_controller_perceptron.h \
+    ../../model/csv.h \
+    ../../model/s21_facade_perceptron.h \
+    ../../model/s21_model_perceptron.h \
     mlp_main_win.h
 
 FORMS += \

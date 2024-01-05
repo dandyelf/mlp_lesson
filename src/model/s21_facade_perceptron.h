@@ -1,7 +1,9 @@
 #ifndef S21_FACADE_PERCEPTRONE_
 #define S21_FACADE_PERCEPTRONE_
 
-#include "../model/s21_facade_perceptron.h"
+#include <string>
+
+#include "./s21_model_perceptron.h"
 
 namespace s21 {
 class FacadePerceptron {
@@ -13,6 +15,15 @@ class FacadePerceptron {
   FacadePerceptron& operator=(const FacadePerceptron&) = delete;
   FacadePerceptron& operator=(FacadePerceptron&&) = delete;
   bool IsAllGood() { return true; }
+
+  void OpenCsv(std::string file_name) { csv_vector_ = ParseCsv(file_name); }
+  const std::vector<std::vector<int>>* GetCsv() {
+    const std::vector<std::vector<int>>* tmp = &csv_vector_;
+    return tmp;
+  }
+
+ private:
+  std::vector<std::vector<int>> csv_vector_;
 };
 }  // namespace s21
 
