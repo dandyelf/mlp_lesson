@@ -1,8 +1,8 @@
 #include "s21_model_perceptron.h"
 
-std::vector<std::vector<int>> ParseCsv(const std::string& filename,
-                                       size_t image_resolution) {
-  std::vector<std::vector<int>> data;
+std::vector<std::vector<unsigned char>> ParseCsv(const std::string& filename,
+                                                 size_t image_resolution) {
+  std::vector<std::vector<unsigned char>> data;
   std::ifstream file(filename);
   if (!file.is_open()) {
     throw std::runtime_error("file");
@@ -12,19 +12,16 @@ std::vector<std::vector<int>> ParseCsv(const std::string& filename,
   while (std::getline(file, line)) {
     std::istringstream iss(line);
     std::string token;
-    std::vector<int> image;
+    std::vector<unsigned char> image;
     // Чтение метки
     std::getline(iss, token, ',');
     image.push_back(std::stoi(token));
-    if (image[lable] < 0) {
+    if (image[lable] > 28) {
       throw std::runtime_error("lable token");
     }
     // Чтение пикселей
     while (std::getline(iss, token, ',')) {
       image.push_back(std::stoi(token));
-      if (255 < image.back() || image.back() < 0) {
-        throw std::runtime_error("pixel token");
-      }
     }
     if (image.size() == image_resolution + pixel) data.push_back(image);
   }

@@ -52,9 +52,11 @@ class MlpMainWin : public QMainWindow {
   QTimer *m_timer_{};
   QPushButton *button_blink_{};
   QString data_path_1_{};
-  QString fileName;
+  QString fileName{};
   bool set_data_1_{}, load_data_2_{}, add_tests_3_{}, load_tests_4_{};
   //  QLabel *m_label;
+  size_t frame_counter_{};
+  QGraphicsPixmapItem *pixmapItem{};
   //  bool m_isChecked = false;
 
   //  !!!!!!!

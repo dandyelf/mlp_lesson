@@ -6,6 +6,8 @@ MlpMainWin::MlpMainWin(QWidget* parent)
     : QMainWindow(parent), ui_(new Ui::MlpMainWin) {
   ui_->setupUi(this);
   BlinkingButton();
+  scene_ = new QGraphicsScene(this);
+  ui_->graphicsView->setScene(scene_);
   //  m_label = new QLabel(this);
 }
 
@@ -26,6 +28,7 @@ void MlpMainWin::Toggle() {
   // Инвертируем состояние кнопки
   //  qDebug() << "Toggle " + QTime::currentTime().toString();
   button_blink_->setChecked(!button_blink_->isChecked());
+  if (set_data_1_) Paint();
 }
 
 void MlpMainWin::BlinkLogic() {
@@ -52,6 +55,8 @@ void MlpMainWin::on_button1_set_data_clicked() {
       controller_obj_->OpenCsv(data_path_1_.toStdString(), 784);
       set_data_1_ = true;
       BlinkLogic();
+      ui_->textBrowser->setText(
+          QString::number(controller_obj_->GetCsv()->size()));
       Paint();
     } catch (std::exception& e) {
       error_message(e.what());
@@ -86,19 +91,21 @@ void MlpMainWin::on_button5_start_edu_clicked() {
 
 void MlpMainWin::Paint() {
   // Создаем вектор пикселей
-      const std::vector<int> pixelVector = controller_obj_->GetCsv()->at(0);
 
-      scene_ = new QGraphicsScene(this);
+  const std::vector<unsigned char> pixelVector =
+      controller_obj_->GetCsv()->at(frame_counter_);
+  scene_->clear();
+  if (pixmapItem == nullptr) delete pixmapItem;
 
-      ui_->graphicsView->setScene(scene_);
-      // Создаем QImage
-      QImage image((uchar*)pixelVector.data(), 28, 28, QImage::Format_Grayscale16);
+  // Создаем QImage
+  QImage image(pixelVector.data() + pixel, 28, 28, QImage::Format_Grayscale8);
+  image = image.scaled(220, 220, Qt::KeepAspectRatio);
+  // Создаем QGraphicsPixmapItem и устанавливаем изображение
+  pixmapItem = new QGraphicsPixmapItem(QPixmap::fromImage(image));
 
-      // Создаем QGraphicsPixmapItem и устанавливаем изображение
-      QGraphicsPixmapItem* pixmapItem = new QGraphicsPixmapItem(QPixmap::fromImage(image));
-
-      // Добавляем QGraphicsPixmapItem на сцену
-      scene_->addItem(pixmapItem);
+  // Добавляем QGraphicsPixmapItem на сцену
+  scene_->addItem(pixmapItem);
+  if (frame_counter_ < controller_obj_->GetCsv()->size()) frame_counter_++;
 }
 
 void MlpMainWin::error_message(QString message) {

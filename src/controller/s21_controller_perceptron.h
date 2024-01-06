@@ -16,7 +16,9 @@ class ControllerPerceptron {
   void OpenCsv(std::string file_name, size_t image_resolution) {
     facade_->OpenCsv(file_name, image_resolution);
   }
-  const std::vector<std::vector<int>>* GetCsv() { return facade_->GetCsv(); }
+  const std::vector<std::vector<unsigned char>>* GetCsv() {
+    return facade_->GetCsv();
+  }
 
  private:
   s21::FacadePerceptron* facade_;

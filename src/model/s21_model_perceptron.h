@@ -9,7 +9,7 @@
 
 enum image { lable, pixel };
 
-std::vector<std::vector<int>> ParseCsv(const std::string& filename,
-                                       size_t image_resolution);
+std::vector<std::vector<unsigned char>> ParseCsv(const std::string& filename,
+                                                 size_t image_resolution);
 
 #endif  // MODEL_S21_MODEL_PERCEPTRONE_
