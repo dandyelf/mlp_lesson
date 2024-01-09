@@ -1,7 +1,8 @@
 #ifndef MLPMAINWIN_H_
 #define MLPMAINWIN_H_
 
-#include <../../controller/s21_controller_perceptron.h>
+#include "../../controller/s21_controller_perceptron.h"
+#include "s21_tablet.h"
 
 #include <QFileDialog>
 #include <QGraphicsPixmapItem>
@@ -45,7 +46,9 @@ class MlpMainWin : public QMainWindow {
 
   void on_button5_start_edu_clicked();
 
- private:
+  void on_button6_graph_clicked();
+
+private:
   QGraphicsScene *scene_;
   s21::ControllerPerceptron *controller_obj_{};
   Ui::MlpMainWin *ui_{};

@@ -113,3 +113,11 @@ void MlpMainWin::error_message(QString message) {
   messageBox.setFixedSize(500, 200);
   messageBox.information(0, "Info", message);
 }
+
+void MlpMainWin::on_button6_graph_clicked()
+{
+    Tablet tablet_okno;
+    tablet_okno.setModal(true);
+    tablet_okno.exec();
+}
+
