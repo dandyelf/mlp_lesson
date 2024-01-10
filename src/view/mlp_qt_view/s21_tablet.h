@@ -13,13 +13,15 @@ class Tablet : public QDialog
     Q_OBJECT
 
 public:
-    explicit Tablet(QWidget *parent = nullptr);
+    explicit Tablet(QWidget *parent = nullptr, QImage *img = nullptr);
     ~Tablet();
 
+private slots:
+    void on_pushButton_clicked();
+
 private:
-    QPointF lastPoint;
-    bool painting;
-    QTimer *timer;
+    QWidget * parent_;
+    QImage *img_;
     Ui::Tablet *ui;
 };
 

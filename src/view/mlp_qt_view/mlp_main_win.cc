@@ -105,7 +105,7 @@ void MlpMainWin::Paint() {
 
   // Добавляем QGraphicsPixmapItem на сцену
   scene_->addItem(pixmapItem);
-  if (frame_counter_ < controller_obj_->GetCsv()->size()) frame_counter_++;
+//  if (frame_counter_ < controller_obj_->GetCsv()->size()) frame_counter_++;
 }
 
 void MlpMainWin::error_message(QString message) {
@@ -116,8 +116,18 @@ void MlpMainWin::error_message(QString message) {
 
 void MlpMainWin::on_button6_graph_clicked()
 {
-    Tablet tablet_okno;
+    Tablet tablet_okno(this, &personal_image_);
     tablet_okno.setModal(true);
     tablet_okno.exec();
-}
+    scene_->clear();
 
+    if (pixmapItem == nullptr) delete pixmapItem;
+
+    // Создаем QImage
+    // Создаем QGraphicsPixmapItem и устанавливаем изображение
+    pixmapItem = new QGraphicsPixmapItem(QPixmap::fromImage(personal_image_));
+
+    // Добавляем QGraphicsPixmapItem на сцену
+    scene_->addItem(pixmapItem);
+//    if (frame_counter_ < controller_obj_->GetCsv()->size()) frame_counter_++;
+  }

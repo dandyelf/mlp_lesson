@@ -33,7 +33,11 @@ class MlpMainWin : public QMainWindow {
   void SetControllerObj(s21::ControllerPerceptron *controller_obj) {
     controller_obj_ = controller_obj;
   }
- private slots:
+  QImage personal_image_;
+
+  void SetImg(QImage img);
+
+private slots:
   void Toggle();
 
   void on_button1_set_data_clicked();
@@ -63,6 +67,7 @@ private:
   //  bool m_isChecked = false;
 
   //  !!!!!!!
+
   void Paint();
   void BlinkingButton();
   void BlinkLogic();

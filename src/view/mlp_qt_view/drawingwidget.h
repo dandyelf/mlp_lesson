@@ -8,12 +8,22 @@ class DrawingWidget : public QWidget
 public:
     DrawingWidget(QWidget *parent = nullptr) : QWidget(parent)
     {
+        parent_ = parent;
         setFixedSize(280, 280); // Устанавливаем размер виджета 280 x 280 пикселей
         drawing = false;
 
         // Создаем изображение размером 28 x 28 пикселей
         image = QImage(280, 280, QImage::Format_RGB32);
         image.fill(Qt::white);
+    }
+
+    void Reset() {
+        image.fill(Qt::white);
+        update();
+    }
+
+    QImage GetImage() {
+        return image;
     }
 
 protected:
@@ -58,6 +68,7 @@ protected:
     }
 
 private:
+    QWidget * parent_;
     bool drawing;
     QPoint lastPoint;
     QImage image;
