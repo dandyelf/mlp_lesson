@@ -33,9 +33,6 @@ class MlpMainWin : public QMainWindow {
   void SetControllerObj(s21::ControllerPerceptron *controller_obj) {
     controller_obj_ = controller_obj;
   }
-  QImage personal_image_;
-
-  void SetImg(QImage img);
 
 private slots:
   void Toggle();
@@ -52,7 +49,7 @@ private slots:
 
   void on_button6_graph_clicked();
 
-private:
+ private:
   QGraphicsScene *scene_;
   s21::ControllerPerceptron *controller_obj_{};
   Ui::MlpMainWin *ui_{};
@@ -60,14 +57,14 @@ private:
   QPushButton *button_blink_{};
   QString data_path_1_{};
   QString fileName{};
-  bool set_data_1_{}, load_data_2_{}, add_tests_3_{}, load_tests_4_{};
+  bool set_data_1_{}, load_data_2_{}, add_tests_3_{}, load_tests_4_{}, load_image_5_{};
   //  QLabel *m_label;
   size_t frame_counter_{};
   QGraphicsPixmapItem *pixmapItem{};
   //  bool m_isChecked = false;
-
+  QImage personal_image_;
   //  !!!!!!!
-
+  void TabletOpen();
   void Paint();
   void BlinkingButton();
   void BlinkLogic();

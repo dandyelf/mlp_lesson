@@ -11,7 +11,9 @@ Tablet::Tablet(QWidget *parent, QImage *img) :
 
 Tablet::~Tablet()
 {
-    if(img_ != nullptr) *img_ = ui->graphicsView->GetImage();
+    qDebug() << "1" << img_->size();
+    *img_ = ui->graphicsView->GetImage();
+    qDebug() << "delete tablet" << img_->size();
     delete ui;
 }
 
@@ -19,4 +21,3 @@ void Tablet::on_pushButton_clicked()
 {
     ui->graphicsView->Reset();
 }
-

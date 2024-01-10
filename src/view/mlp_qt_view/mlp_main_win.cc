@@ -8,7 +8,6 @@ MlpMainWin::MlpMainWin(QWidget* parent)
   BlinkingButton();
   scene_ = new QGraphicsScene(this);
   ui_->graphicsView->setScene(scene_);
-  //  m_label = new QLabel(this);
 }
 
 MlpMainWin::~MlpMainWin() {
@@ -26,9 +25,8 @@ void MlpMainWin::BlinkingButton() {
 
 void MlpMainWin::Toggle() {
   // Инвертируем состояние кнопки
-  //  qDebug() << "Toggle " + QTime::currentTime().toString();
   button_blink_->setChecked(!button_blink_->isChecked());
-  if (set_data_1_) Paint();
+  if (set_data_1_ && !load_image_5_) Paint();
 }
 
 void MlpMainWin::BlinkLogic() {
@@ -54,6 +52,7 @@ void MlpMainWin::on_button1_set_data_clicked() {
     try {
       controller_obj_->OpenCsv(data_path_1_.toStdString(), 784);
       set_data_1_ = true;
+      load_image_5_ = false;
       BlinkLogic();
       ui_->textBrowser->setText(
           QString::number(controller_obj_->GetCsv()->size()));
@@ -91,7 +90,6 @@ void MlpMainWin::on_button5_start_edu_clicked() {
 
 void MlpMainWin::Paint() {
   // Создаем вектор пикселей
-
   const std::vector<unsigned char> pixelVector =
       controller_obj_->GetCsv()->at(frame_counter_);
   scene_->clear();
@@ -105,7 +103,7 @@ void MlpMainWin::Paint() {
 
   // Добавляем QGraphicsPixmapItem на сцену
   scene_->addItem(pixmapItem);
-//  if (frame_counter_ < controller_obj_->GetCsv()->size()) frame_counter_++;
+  if (frame_counter_ < controller_obj_->GetCsv()->size()) frame_counter_++;
 }
 
 void MlpMainWin::error_message(QString message) {
@@ -116,18 +114,20 @@ void MlpMainWin::error_message(QString message) {
 
 void MlpMainWin::on_button6_graph_clicked()
 {
-    Tablet tablet_okno(this, &personal_image_);
-    tablet_okno.setModal(true);
-    tablet_okno.exec();
+    TabletOpen();
+    load_image_5_ = true;
     scene_->clear();
-
     if (pixmapItem == nullptr) delete pixmapItem;
-
     // Создаем QImage
     // Создаем QGraphicsPixmapItem и устанавливаем изображение
     pixmapItem = new QGraphicsPixmapItem(QPixmap::fromImage(personal_image_));
-
     // Добавляем QGraphicsPixmapItem на сцену
     scene_->addItem(pixmapItem);
 //    if (frame_counter_ < controller_obj_->GetCsv()->size()) frame_counter_++;
+  }
+
+  void MlpMainWin::TabletOpen() {
+    Tablet tablet_okno(this, &personal_image_);
+    tablet_okno.setModal(true);
+    tablet_okno.exec();
   }
