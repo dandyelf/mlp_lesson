@@ -1,9 +1,6 @@
 #ifndef MLPMAINWIN_H_
 #define MLPMAINWIN_H_
 
-#include "../../controller/s21_controller_perceptron.h"
-#include "s21_tablet.h"
-
 #include <QFileDialog>
 #include <QGraphicsPixmapItem>
 #include <QImage>
@@ -15,6 +12,9 @@
 #include <QTime>
 #include <QTimer>
 #include <exception>
+
+#include "../../controller/s21_controller_perceptron.h"
+#include "s21_tablet.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -34,7 +34,7 @@ class MlpMainWin : public QMainWindow {
     controller_obj_ = controller_obj;
   }
 
-private slots:
+ private slots:
   void Toggle();
 
   void on_button1_set_data_clicked();
@@ -57,7 +57,8 @@ private slots:
   QPushButton *button_blink_{};
   QString data_path_1_{};
   QString fileName{};
-  bool set_data_1_{}, load_data_2_{}, add_tests_3_{}, load_tests_4_{}, load_image_5_{};
+  bool set_data_1_{}, load_data_2_{}, add_tests_3_{}, load_tests_4_{},
+      load_image_5_{};
   //  QLabel *m_label;
   size_t frame_counter_{};
   QGraphicsPixmapItem *pixmapItem{};

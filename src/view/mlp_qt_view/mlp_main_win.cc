@@ -100,7 +100,6 @@ void MlpMainWin::Paint() {
   image = image.scaled(220, 220, Qt::KeepAspectRatio);
   // Создаем QGraphicsPixmapItem и устанавливаем изображение
   pixmapItem = new QGraphicsPixmapItem(QPixmap::fromImage(image));
-
   // Добавляем QGraphicsPixmapItem на сцену
   scene_->addItem(pixmapItem);
   if (frame_counter_ < controller_obj_->GetCsv()->size()) frame_counter_++;
@@ -112,22 +111,21 @@ void MlpMainWin::error_message(QString message) {
   messageBox.information(0, "Info", message);
 }
 
-void MlpMainWin::on_button6_graph_clicked()
-{
-    TabletOpen();
-    load_image_5_ = true;
-    scene_->clear();
-    if (pixmapItem == nullptr) delete pixmapItem;
-    // Создаем QImage
-    // Создаем QGraphicsPixmapItem и устанавливаем изображение
-    pixmapItem = new QGraphicsPixmapItem(QPixmap::fromImage(personal_image_));
-    // Добавляем QGraphicsPixmapItem на сцену
-    scene_->addItem(pixmapItem);
-//    if (frame_counter_ < controller_obj_->GetCsv()->size()) frame_counter_++;
-  }
+void MlpMainWin::on_button6_graph_clicked() {
+  TabletOpen();
+  load_image_5_ = true;
+  scene_->clear();
+  if (pixmapItem == nullptr) delete pixmapItem;
+  // Создаем QImage
+  // Создаем QGraphicsPixmapItem и устанавливаем изображение
+  QImage image = personal_image_.scaled(220, 220, Qt::KeepAspectRatio);
+  pixmapItem = new QGraphicsPixmapItem(QPixmap::fromImage(image));
+  // Добавляем QGraphicsPixmapItem на сцену
+  scene_->addItem(pixmapItem);
+}
 
-  void MlpMainWin::TabletOpen() {
-    Tablet tablet_okno(this, &personal_image_);
-    tablet_okno.setModal(true);
-    tablet_okno.exec();
-  }
+void MlpMainWin::TabletOpen() {
+  Tablet tablet_okno(this, &personal_image_);
+  tablet_okno.setModal(true);
+  tablet_okno.exec();
+}

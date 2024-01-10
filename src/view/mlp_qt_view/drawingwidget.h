@@ -3,75 +3,67 @@
 
 #include <QtWidgets>
 
-class DrawingWidget : public QWidget
-{
-public:
-    DrawingWidget(QWidget *parent = nullptr) : QWidget(parent)
-    {
-        parent_ = parent;
-        setFixedSize(280, 280); // Устанавливаем размер виджета 280 x 280 пикселей
-        drawing = false;
+class DrawingWidget : public QWidget {
+ public:
+  DrawingWidget(QWidget *parent = nullptr) : QWidget(parent) {
+    parent_ = parent;
+    setFixedSize(280, 280);  // Устанавливаем размер виджета 280 x 280 пикселей
+    drawing = false;
 
-        // Создаем изображение размером 28 x 28 пикселей
-        image = QImage(280, 280, QImage::Format_RGB32);
-        image.fill(Qt::white);
+    // Создаем изображение размером 28 x 28 пикселей
+    image = QImage(280, 280, QImage::Format_RGB32);
+    image.fill(Qt::white);
+  }
+
+  void Reset() {
+    image.fill(Qt::white);
+    update();
+  }
+
+  QImage GetImage() { return image; }
+
+ protected:
+  void mousePressEvent(QMouseEvent *event) override {
+    if (event->button() == Qt::LeftButton) {
+      lastPoint = event->pos();
+      drawing = true;
     }
+  }
 
-    void Reset() {
-        image.fill(Qt::white);
-        update();
+  void mouseMoveEvent(QMouseEvent *event) override {
+    if (event->buttons() & Qt::LeftButton && drawing) {
+      QPainter painter(&image);
+      QPen pen(Qt::black, 16, Qt::SolidLine, Qt::RoundCap);
+      painter.setPen(pen);
+      painter.drawLine(
+          lastPoint,
+          event->pos());  // Масштабируем координаты в 28 x 28 пикселей
+      lastPoint = event->pos();
+      update();  // Перерисовываем виджет
     }
+  }
 
-    QImage GetImage() {
-        return image;
+  void mouseReleaseEvent(QMouseEvent *event) override {
+    if (event->button() == Qt::LeftButton && drawing) {
+      drawing = false;
     }
+  }
 
-protected:
-    void mousePressEvent(QMouseEvent *event) override
-    {
-        if (event->button() == Qt::LeftButton)
-        {
-            lastPoint = event->pos();
-            drawing = true;
-        }
-    }
+  void paintEvent(QPaintEvent *event) override {
+    if (event == nullptr) return;
+    QPainter painter(this);
 
-    void mouseMoveEvent(QMouseEvent *event) override
-    {
-        if (event->buttons() & Qt::LeftButton && drawing)
-        {
-            QPainter painter(&image);
-            QPen pen(Qt::black, 16, Qt::SolidLine, Qt::RoundCap);
-            painter.setPen(pen);
-            painter.drawLine(lastPoint, event->pos()); // Масштабируем координаты в 28 x 28 пикселей
-            lastPoint = event->pos();
-            update(); // Перерисовываем виджет
-        }
-    }
+    // Масштабируем изображение до размеров виджета
+    QImage scaledImage =
+        image.scaled(size(), Qt::KeepAspectRatio, Qt::SmoothTransformation);
+    painter.drawImage(QPoint(0, 0), scaledImage);
+  }
 
-    void mouseReleaseEvent(QMouseEvent *event) override
-    {
-        if (event->button() == Qt::LeftButton && drawing)
-        {
-            drawing = false;
-        }
-    }
-
-    void paintEvent(QPaintEvent *event) override
-    {
-        if(event == nullptr) return;
-        QPainter painter(this);
-
-        // Масштабируем изображение до размеров виджета
-        QImage scaledImage = image.scaled(size(), Qt::KeepAspectRatio, Qt::SmoothTransformation);
-        painter.drawImage(QPoint(0, 0), scaledImage);
-    }
-
-private:
-    QWidget * parent_;
-    bool drawing;
-    QPoint lastPoint;
-    QImage image;
+ private:
+  QWidget *parent_;
+  bool drawing;
+  QPoint lastPoint;
+  QImage image;
 };
 
-#endif // DRAWINGWIDGET_H_
+#endif  // DRAWINGWIDGET_H_
