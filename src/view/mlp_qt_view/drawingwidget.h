@@ -35,6 +35,7 @@ class DrawingWidget : public QWidget {
       QPainter painter(&image);
       QPen pen(Qt::black, 16, Qt::SolidLine, Qt::RoundCap);
       painter.setPen(pen);
+      painter.setRenderHint(QPainter::Antialiasing, true);
       painter.drawLine(
           lastPoint,
           event->pos());  // Масштабируем координаты в 28 x 28 пикселей
