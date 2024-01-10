@@ -17,7 +17,7 @@
    <item>
     <layout class="QVBoxLayout" name="verticalLayout">
      <item>
-      <widget class="QGraphicsView" name="graphicsView"/>
+      <widget class="DrawingWidget" name="graphicsView"/>
      </item>
     </layout>
    </item>

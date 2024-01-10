@@ -20,6 +20,7 @@ HEADERS += \
     ../../controller/s21_controller_perceptron.h \
     ../../model/s21_facade_perceptron.h \
     ../../model/s21_model_perceptron.h \
+    drawingwidget.h \
     mlp_main_win.h \
     s21_tablet.h
 

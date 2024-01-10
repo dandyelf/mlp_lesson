@@ -6,17 +6,17 @@ Tablet::Tablet(QWidget *parent) :
     ui(new Ui::Tablet)
 {
     ui->setupUi(this);
-    QGraphicsScene scene;
-    ui->graphicsView->setScene(&scene);
-    QPen pen;
-    pen.setColor(Qt::black);
-    pen.setWidth(2);
-    ui->graphicsView->scene();
-//    scene
-//            ->setDefaultPen(pen);
+    // QGraphicsScene scene;
+    // ui->graphicsView->setScene(&scene);
+    // QPen pen;
+    // pen.setColor(Qt::black);
+    // pen.setWidth(2);
+    // ui->graphicsView->scene();
+    // //    scene
+    // //            ->setDefaultPen(pen);
 
-            // Устанавливаем начальные координаты
-            lastPoint = QPointF();
+    // // Устанавливаем начальные координаты
+    // lastPoint = QPointF();
 }
 
 Tablet::~Tablet()

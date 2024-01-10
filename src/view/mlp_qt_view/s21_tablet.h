@@ -1,7 +1,8 @@
-#ifndef S21_TABLET_H
-#define S21_TABLET_H
+#ifndef S21_TABLET_H_
+#define S21_TABLET_H_
 
 #include <QDialog>
+#include "drawingwidget.h"
 
 namespace Ui {
 class Tablet;
@@ -22,4 +23,4 @@ private:
     Ui::Tablet *ui;
 };
 
-#endif // S21_TABLET_H
+#endif // S21_TABLET_H_

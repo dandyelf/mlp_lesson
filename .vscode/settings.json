@@ -65,6 +65,7 @@
         "cinttypes": "cpp",
         "typeinfo": "cpp",
         "variant": "cpp",
-        "*.ccbac": "cpp"
+        "*.ccbac": "cpp",
+        "qfiledialog": "cpp"
     }
 }

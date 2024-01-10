@@ -21,7 +21,7 @@ std::vector<std::vector<unsigned char>> ParseCsv(const std::string& filename,
     }
     // Чтение пикселей
     while (std::getline(iss, token, ',')) {
-      image.push_back(std::stoi(token));
+      image.push_back(255 - std::stoi(token));
     }
     if (image.size() == image_resolution + pixel) data.push_back(image);
   }
