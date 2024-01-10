@@ -33,7 +33,7 @@ class DrawingWidget : public QWidget {
   void mouseMoveEvent(QMouseEvent *event) override {
     if (event->buttons() & Qt::LeftButton && drawing) {
       QPainter painter(&image);
-      QPen pen(Qt::black, 16, Qt::SolidLine, Qt::RoundCap);
+      QPen pen(Qt::black, 20, Qt::SolidLine, Qt::RoundCap);
       painter.setPen(pen);
       painter.setRenderHint(QPainter::Antialiasing, true);
       painter.drawLine(
@@ -57,6 +57,7 @@ class DrawingWidget : public QWidget {
     // Масштабируем изображение до размеров виджета
     QImage scaledImage =
         image.scaled(size(), Qt::KeepAspectRatio, Qt::SmoothTransformation);
+    scaledImage = scaledImage.(10);
     painter.drawImage(QPoint(0, 0), scaledImage);
   }
 
