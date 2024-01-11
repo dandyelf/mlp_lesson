@@ -34,12 +34,35 @@ class MlpMainWin : public QMainWindow {
     controller_obj_ = controller_obj;
   }
 
+  #pragma pack(push, 1)
+  struct BMPHeader {
+    char signature[2];
+    uint32_t fileSize;
+    uint32_t reserved;
+    uint32_t dataOffset;
+    uint32_t headerSize;
+    int32_t width;
+    int32_t height;
+    uint16_t planes;
+    uint16_t bitDepth;
+    uint32_t compression;
+    uint32_t imageSize;
+    int32_t xResolution;
+    int32_t yResolution;
+    uint32_t colors;
+    uint32_t importantColors;
+  };
+  #pragma pack(pop)
+
+
  private slots:
   void Toggle();
 
   void on_button1_set_data_clicked();
 
   void on_button2_load_data_clicked();
+
+  void LoadBmp();
 
   void on_button3_add_tests_clicked();
 

@@ -66,8 +66,37 @@ void MlpMainWin::on_button1_set_data_clicked() {
 }
 
 void MlpMainWin::on_button2_load_data_clicked() {
+  QString fileName2 = QFileDialog::getOpenFileName(
+    this, tr("Open Bmp File"), data_path_1_, tr("Bmp Files (*.bmp)"));
+  if (fileName2 != "") {
+    data_path_1_ = fileName2;
+    LoadBmp();
+  }
   load_data_2_ = true;
   BlinkLogic();
+}
+
+void MlpMainWin::LoadBmp() {
+  std::ifstream file("image.bmp", std::ios::binary);
+
+    if (!file) {
+        std::cout << "Failed to open file." << std::endl;
+        error_message("Нет файла");
+    }
+
+    BMPHeader header;
+    file.read(reinterpret_cast<char*>(&header), sizeof(header));
+
+    if (header.signature[0] != 'B' || header.signature[1] != 'M') {
+        std::cout << "Invalid BMP file." << std::endl;
+        error_message("Нет файла");
+    }
+
+    std::cout << "Width: " << header.width << std::endl;
+    std::cout << "Height: " << header.height << std::endl;
+    std::cout << "Bit Depth: " << header.bitDepth << std::endl;
+
+    file.close();
 }
 
 void MlpMainWin::on_button3_add_tests_clicked() {
