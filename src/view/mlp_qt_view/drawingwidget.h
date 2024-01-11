@@ -2,6 +2,7 @@
 #define DRAWINGWIDGET_H_
 
 #include <QtWidgets>
+#include <QGraphicsBlurEffect>
 
 class DrawingWidget : public QWidget {
  public:
@@ -9,9 +10,8 @@ class DrawingWidget : public QWidget {
     parent_ = parent;
     setFixedSize(280, 280);  // Устанавливаем размер виджета 280 x 280 пикселей
     drawing = false;
-
     // Создаем изображение размером 28 x 28 пикселей
-    image = QImage(280, 280, QImage::Format_RGB32);
+    image = QImage(280, 280, QImage::Format_Grayscale8);
     image.fill(Qt::white);
   }
 
@@ -20,7 +20,14 @@ class DrawingWidget : public QWidget {
     update();
   }
 
-  QImage GetImage() { return image; }
+  QImage GetImage() { 
+    QImage scaledImage = image.scaled(this->size(), Qt::KeepAspectRatio,
+                                      Qt::SmoothTransformation);
+    scaledImage = scaledImage.scaled(16, 16, Qt::KeepAspectRatio, Qt::SmoothTransformation);
+    scaledImage = scaledImage.scaled(this->size(), Qt::KeepAspectRatio,
+                                      Qt::SmoothTransformation);
+    return scaledImage; 
+  }
 
  protected:
   void mousePressEvent(QMouseEvent *event) override {
@@ -32,13 +39,14 @@ class DrawingWidget : public QWidget {
 
   void mouseMoveEvent(QMouseEvent *event) override {
     if (event->buttons() & Qt::LeftButton && drawing) {
-      QPainter painter(&image);
-      QPen pen(Qt::black, 20, Qt::SolidLine, Qt::RoundCap);
+      QPainter painter(&image);        
+      QPen pen(Qt::black, 35, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin);
       painter.setPen(pen);
       painter.setRenderHint(QPainter::Antialiasing, true);
+      painter.setRenderHint(QPainter::SmoothPixmapTransform, true);
       painter.drawLine(
           lastPoint,
-          event->pos());  // Масштабируем координаты в 28 x 28 пикселей
+          event->pos());
       lastPoint = event->pos();
       update();  // Перерисовываем виджет
     }
@@ -53,11 +61,12 @@ class DrawingWidget : public QWidget {
   void paintEvent(QPaintEvent *event) override {
     if (event == nullptr) return;
     QPainter painter(this);
-
     // Масштабируем изображение до размеров виджета
-    QImage scaledImage =
-        image.scaled(size(), Qt::KeepAspectRatio, Qt::SmoothTransformation);
-    scaledImage = scaledImage.(10);
+    QImage scaledImage = image.scaled(this->size(), Qt::KeepAspectRatio,
+                                      Qt::SmoothTransformation);
+    scaledImage = scaledImage.scaled(28, 28, Qt::KeepAspectRatio, Qt::SmoothTransformation);
+    scaledImage = scaledImage.scaled(this->size(), Qt::KeepAspectRatio,
+                                      Qt::SmoothTransformation);
     painter.drawImage(QPoint(0, 0), scaledImage);
   }
 

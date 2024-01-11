@@ -10,7 +10,7 @@ Tablet::Tablet(QWidget *parent, QImage *img)
 
 Tablet::~Tablet() {
   QImage tmp = ui->graphicsView->GetImage();
-  *img_ = tmp.scaled(28, 28, Qt::KeepAspectRatio);
+  if (img_ != nullptr) *img_ = tmp.scaled(28, 28, Qt::KeepAspectRatio);
   delete ui;
 }
 
