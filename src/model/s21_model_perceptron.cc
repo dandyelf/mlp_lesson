@@ -25,5 +25,6 @@ std::vector<std::vector<unsigned char>> ParseCsv(const std::string& filename,
     }
     if (image.size() == image_resolution + pixel) data.push_back(image);
   }
+  if(data.size() == 0) throw std::runtime_error("empty file");
   return data;
 }

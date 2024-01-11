@@ -66,6 +66,7 @@
         "typeinfo": "cpp",
         "variant": "cpp",
         "*.ccbac": "cpp",
-        "qfiledialog": "cpp"
+        "qfiledialog": "cpp",
+        "source_location": "cpp"
     }
 }

@@ -62,7 +62,7 @@ class MlpMainWin : public QMainWindow {
 
   void on_button2_load_data_clicked();
 
-  void LoadBmp();
+  void LoadBmp(std::string file_name);
 
   void on_button3_add_tests_clicked();
 
@@ -73,18 +73,18 @@ class MlpMainWin : public QMainWindow {
   void on_button6_graph_clicked();
 
  private:
-  QGraphicsScene *scene_;
+  QGraphicsScene *scene_, *scene2_;
   s21::ControllerPerceptron *controller_obj_{};
   Ui::MlpMainWin *ui_{};
   QTimer *m_timer_{};
   QPushButton *button_blink_{};
   QString data_path_1_{};
-  QString fileName{};
+  QString fileName_{};
   bool set_data_1_{}, load_data_2_{}, add_tests_3_{}, load_tests_4_{},
       load_image_5_{};
   //  QLabel *m_label;
   size_t frame_counter_{};
-  QGraphicsPixmapItem *pixmapItem{};
+  QGraphicsPixmapItem *pixmapItem_{}, *pixmapItem2_{};
   //  bool m_isChecked = false;
   QImage personal_image_;
   //  !!!!!!!
